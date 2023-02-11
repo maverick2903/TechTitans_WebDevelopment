@@ -15,12 +15,17 @@ export const iconsx={
 
 export const titleLogosx={
     "font-family":'Shadows Into Light Two',
-    "font-size": {sm:"20px",md:"40px",lg:"45px",xl:"55px"}
+    "font-size": {sm:"20px",md:"48px",lg:"53px",xl:"58px"}
 }
 
 export const textsx={
     "font-family":'QuickSand',
     "font-size": {sm:"20px",md:"28px",lg:"35px",xl:"40px"}
+}
+
+export const textButtonsx={
+    "font-family":'QuickSand',
+    "font-size": {sm:"20px",md:"22px",lg:"29px",xl:"40px"}
 }
 
 export const menusx ={
