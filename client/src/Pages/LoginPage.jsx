@@ -23,10 +23,9 @@ import {
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
-import HomeImage from "../assets/landing-image.jpg";
+import HomeImage from "../assets/abcd.svg";
 
 export default function LoginPage() {
-    const { colorMode, toggleColorMode } = useColorMode();
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -37,7 +36,6 @@ export default function LoginPage() {
     /*
   after logging in we set Auth to an objectuser{username:"",role:""}
   and then write this statement
-  
   */
 
     const validateData = () => {};

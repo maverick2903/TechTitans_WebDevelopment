@@ -6,6 +6,7 @@ const app=express()
 const dotenv=require('dotenv').config()
 const user=require('./routes/user.routes')
 const client=require('./routes/client.routes')
+const worker=require('./routes/worker.routes')
 require('./dbConnect')
 app.use(express.json());
 app.use(cookieParser());

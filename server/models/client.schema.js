@@ -38,7 +38,7 @@ const clientSchema=new mongoose.Schema(
             enum:['client']
         },
         hasSentReq:{
-            type:boolean
+            type:Boolean
         },
         category:{
             type:String
