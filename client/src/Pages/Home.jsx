@@ -2,8 +2,10 @@ import { Navigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth"
 
 export default function Home() {
-  const { Auth } = useAuth();
+  const { auth } = useAuth();
+  console.log("home has been hit")
+
   return (
-    Auth.user.role=="client"?<Navigate to="userpage" />:<Navigate to="hostpage" />
+    auth.role=="client"?<Navigate to="clientpage" />:<Navigate to="worker" />
   )
 }

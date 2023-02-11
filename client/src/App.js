@@ -22,13 +22,10 @@ import ClientSignUp from './Pages/ClientSignup';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<RootLayout />}>
-
       <Route element={<RequireAuth />}>
         <Route index element={<Home />} />
         <Route path='clientpage' element={<ClientPage />} />
-        <Route path='clientpagerequest' element={<ClientPageRequest />} />
-        <Route path='clientinteractions' element={<ClientLogData />} />
-        <Route path='worker' element={<WorkerPage />} />
+        <Route path='workerpage' element={<WorkerPage />} />
       </Route>
 
       <Route path='aboutus' element={<Aboutus />} />

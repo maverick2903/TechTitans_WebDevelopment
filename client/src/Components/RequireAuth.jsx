@@ -5,6 +5,10 @@ const RequireAuth = () =>{
     const {auth} = useAuth()
     const location = useLocation()
 
+    console.log(auth)
+    console.log("require auth has been hit")
+    console.log(auth)
+
     return(
         auth?.user
         ?<Outlet />
