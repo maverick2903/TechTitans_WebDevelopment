@@ -1,0 +1,22 @@
+nav a.active{
+    text-shadow:2px 3px 4px;
+    font-weight: bold;
+}
+
+.root-layout{
+    height: 90vh;
+}
+
+.about-us{
+    height: 90vh;
+}
+
+contact-us{
+    height: 90vh;
+}
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
