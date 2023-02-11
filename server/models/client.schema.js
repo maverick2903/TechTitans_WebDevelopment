@@ -40,6 +40,9 @@ const clientSchema=new mongoose.Schema(
         hasSentReq:{
             type:boolean
         },
+        category:{
+            type:String
+        },
         reqToClient:{
             type:String
         },
@@ -67,11 +70,6 @@ clientSchema.pre("save", async function (next) {
     if (this.isModified("password")) {
         this.password = await bcrypt.hash(this.password, 9);
     }
-    const loc = await geocoder.geocode(this.pincode);
-    this.location = {
-        type: "Point",
-        coordinates: [loc[0].latitude, loc[0].longitude],
-    };
     next();
 });
 
