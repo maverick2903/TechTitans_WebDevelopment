@@ -38,7 +38,7 @@ export default function LoginPage() {
   and then write this statement
   */
 
-    const validateData = () => {};
+    const validateData = () => {return true};
 
     const handleSubmit = async (e) => {
         e.preventDefault();
