@@ -12,6 +12,7 @@ const generateOtp = require("../utilities/utils")
 const newWorker=async (req, res) => {
     try
     {
+    console.log(req.body)
     const { name, mobile,city,username,password,field} = req.body;
     if (!name || !mobile || !city || !field)
         return res
@@ -20,6 +21,7 @@ const newWorker=async (req, res) => {
     const worker = new Worker(req.body);
     await worker.save()
     }catch(err){
+        console.log(err)
         res.status(400).json({message:err.message})
     }
 }
