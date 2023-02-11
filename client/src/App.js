@@ -24,6 +24,9 @@ import WorkerSignUp from "./Pages/WorkerSignup";
 import ClientSignUp from "./Pages/ClientSignup";
 import ListingPage from "./Pages/ListingPage";
 
+//admin
+import AdminPage from "./Pages/AdminPage"
+
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<RootLayout />}>
@@ -32,6 +35,8 @@ const router = createBrowserRouter(
             <Route path="clientpage" element={<ClientPage />} />
             <Route path="workerpage" element={<WorkerPage />} />
             <Route path="clientlisting" element={<ListingPage />} />
+            <Route path="/admin" element= {<AdminPage/>} />
+            <Route path="clientpagerequests" element={<ClientPageRequest />} />
             {/* </Route> */}
 
             <Route path="aboutus" element={<Aboutus />} />

@@ -3,15 +3,12 @@ const jwt = require("jsonwebtoken");
 const validator = require("validator");
 const bcrypt = require("bcrypt");
 
-const workerVerificationSchema=new mongoose.Schema(
+const workerVerificationSchema = new mongoose.Schema(
     {
-        workers:[{
-            worker:{
-                idProof:{type:String},
-                worker_id:{type:mongoose.Schema.Types.ObjectId}
-            }
-    }]
-})
+        username: { type: String },
+        idProof: { type: String },
+        name:{type:String}
+    })
 
-const workerVerification=mongoose.model('workerVerification',workerVerificationSchema)
-module.exports=workerVerification
+const workerVerification = mongoose.model('workerVerification', workerVerificationSchema)
+module.exports = workerVerification

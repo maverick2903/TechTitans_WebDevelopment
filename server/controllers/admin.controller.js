@@ -14,7 +14,7 @@ const workerToBeVerified=async(req,res)=>{
     try
     {
     const worker=await workerVerification.find({})
-    res.status(200).json(worker)
+    res.status(200).json({worker})
     }catch(err){
         res.status(400).json({message:err.message})
     }
@@ -22,10 +22,29 @@ const workerToBeVerified=async(req,res)=>{
 
 const verifyWorker=async(req,res)=>{
     try {
-        await Worker.findByIdAndUpdate(req.params.id,{verified:true})
-        await workerVerification.findByIdAndDelete(req.params.id)
+        const username=req.body
+        await Worker.findOneAndUpdate({username:username},{verified:true})
+        await workerVerification.findOneAndDelete({username:username})
         res.status(200).json({message:'Worker Verified'})
     } catch (error) {
         res.status(400).json({message:error.message})
     }
+}
+
+const deleteWorker=async(req,res)=>{
+    try {
+        const username=req.body
+        await Worker.findOneAndDelete({username:username})
+        await workerVerification.findOneAndDelete({username:username})
+        res.status(200).json({message:'Worker deleted'})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+}
+
+
+module.exports={
+    workerToBeVerified,
+    verifyWorker,
+    deleteWorker
 }
