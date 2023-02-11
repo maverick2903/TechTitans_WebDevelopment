@@ -35,7 +35,8 @@ const workerSchema=new mongoose.Schema(
             type:String
         },
         rating:{type:Number},
-        verified:{type:Boolean},
+        verified:{type:Boolean,default:false},
+        idProof:{type:String},
         profilePic:{type:String}
     },{timestamps:true}
 )

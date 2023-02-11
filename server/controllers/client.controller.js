@@ -60,10 +60,39 @@ const request = async (req, res) => {
         res.status(400).json({ message: error.message })
     }
 }
+const ongoingRequest=async(req,res)=>{
+    try {
+       res.status(200).json({message:req.user.reqToClient})
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+const clientQuotePrice=async(req,res)=>{
+    try {
+        const {username,price}=req.body //worker ka username chaiye
+        await Communication.findOneAndUpdate({usernameClient:username},{priceByClient:price})
+        await Communication.findOneAndUpdate({usernameClient:username},{usernameWorker:req.user.username})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+}
+
+const clientGetPrice=async(req,res)=>{
+    try {
+        const {username}=req.body //worker ka username chaiye
+        const user=await Communication.findById(username._id)
+        res.status(200).json({message:user.priceByClient})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+}
 
 module.exports={
     newClient,
     updateClient,
     deleteClient,
-    request
+    request,
+    ongoingRequest,
+    clientQuotePrice,
+    clientGetPrice
 }
