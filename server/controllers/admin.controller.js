@@ -22,10 +22,13 @@ const workerToBeVerified=async(req,res)=>{
 
 const verifyWorker=async(req,res)=>{
     try {
-        await Worker.findByIdAndUpdate(req.params.id,{verified:true})
-        await workerVerification.findByIdAndDelete(req.params.id)
+        const username=req.body
+        await Worker.findOneAndUpdate({username:username},{verified:true})
+        await workerVerification.findOneAndDelete({username:username})
         res.status(200).json({message:'Worker Verified'})
     } catch (error) {
         res.status(400).json({message:error.message})
     }
 }
+
+module.exports={workerToBeVerified,verifyWorker}
