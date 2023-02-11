@@ -18,6 +18,6 @@ router.delete('/deleteWorker',authenticate,deleteWorker)
 router.get('/selfView',authenticate,selfView)
 router.get('/clientJob',authenticate,clientJob)
 router.get('/particularClientJob',authenticate,particularClientJob)
-
+router.post('/requestClient',authenticate,requestClient)
 
 module.exports=router

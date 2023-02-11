@@ -56,7 +56,7 @@ const selfView=async(req,res)=>{
 const clientJob=async(req,res)=>{
     try {
         const client=await Client.find({})
-        res.status(200).json(client.category,client.reqToClient,client.username)
+        res.status(200).json({category:client.category},{reqToClient:client.reqToClient},{username:client.username})
     } catch (error) {
         res.status(400).json({message:error.message})
     }
@@ -74,12 +74,13 @@ const particularClientJob=async(req,res)=>{
 const requestClient=async(req,res)=>{
     try {
         const username=req.body
-        const user=await Client.find({username:username})
+        //const user=await Client.find({username:username})
         const communication=new Communication({
             usernameWorker:username,
             usernameClient:req.user.username 
         })
         await communication.save()
+        res.status(200).json({message:'Connected'})
     } catch (error) {
         res.status(400).json({message:error.message})
     }
