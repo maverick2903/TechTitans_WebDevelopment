@@ -7,6 +7,12 @@ export const Navlinksx={
     }
 }
 
+export const iconsx={
+    "font-size": {sm:"14px",md:"28px",lg:"33px",xl:"38px"},
+    "height":{sm:"30px",md:"45px",lg:"53px",xl:"55px"},
+    "width":{sm:"20px",md:"40px",lg:"53px",xl:"55px"}
+}
+
 export const titleLogosx={
     "font-family":'Shadows Into Light Two',
     "font-size": {sm:"20px",md:"40px",lg:"45px",xl:"55px"}
