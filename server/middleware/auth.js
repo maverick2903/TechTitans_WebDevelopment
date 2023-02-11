@@ -4,7 +4,6 @@ const User = require("../models/user.schema");
 const authenticate = async (req, res, next) => {
     try {
         const { jsonwebtoken } = req.body;
-        console.log(jsonwebtoken);
         if (!jsonwebtoken) {
             throw new Error("Login first");
         }
@@ -21,7 +20,7 @@ const authenticate = async (req, res, next) => {
             throw new Error("user not found");
         }
         //setting our req parameters which can be accessed as and when needed later
-        req.userData = userData;
+        req.user = userData;
         next();
     } catch (err) {
         res.status(401).json({
