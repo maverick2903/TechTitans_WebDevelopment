@@ -10,35 +10,44 @@ const SecretKey = process.env.SECRET_KEY
 
 const newUser = async (req, res) => {
     try {
-        console.log(req.body)
         const { username, password, role } = req.body;
         if (!username || !password || !role)
             return res
                 .status(400)
                 .json({ message: "Please fill the necessary details " });
         const user = new User(req.body);
-        await user.save()
+
+        await user.save();
         const token = jwt.sign({ username: req.body.username }, SecretKey);
-            res.cookie("jsonwebtoken", token, {
-                expires: new Date(Date.now() + 3600000),
-                httpOnly: true,
-                sameSite: "none",
-                secure: true,
-            });
-        res.status(200).json({ message: 'Successfully Registered' })
+        res.cookie("jsonwebtoken", token, {
+            // expires: new Date(Date.now() + 3600000),
+            maxAge: 604800000,
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        });
+        res.status(200).json({
+            message: "Successfully Registered",
+            user,
+            token,
+        });
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message });
     }
-}
+};
 
 const loginUser = async (req, res) => {
     try {
-        const { username, password } = req.body
+        const { username, password } = req.body;
+
+       
         if (!username || !password)
             return res
                 .status(400)
                 .json({ message: "Please fill the necessary details " });
-        const userData = await User.findOne({ email: req.body.username });
+
+        const userData = await User.findOne({ username: req.body.username });
+
         if (!userData)
             return res.status(400).json({ message: "User not found" });
         const validPassword = await bcrypt.compare(
@@ -50,24 +59,26 @@ const loginUser = async (req, res) => {
         else {
             const token = jwt.sign({ username: req.body.username }, SecretKey);
             res.cookie("jsonwebtoken", token, {
-                expires: new Date(Date.now() + 3600000),
+
+                // expires: new Date(Date.now() + 3600000),
+                maxAge: 604800000,
+
                 httpOnly: true,
                 sameSite: "none",
                 secure: true,
             });
-            return res
-                .status(200)
-                .json(userData);
+
+            return res.status(200).json({ userData, token });
         }
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        res.status(400).json({ message: error.message });
     }
-  }
-
+};
+ 
 
 const logout = async (req, res) => {
-  res.clearCookie("jsonwebtoken", { path: "/" });
-  res.status(200).json({ message: "User logged out successfully" });
+    res.clearCookie("jsonwebtoken", { path: "/" });
+    res.status(200).json({ message: "User logged out successfully" });
 };
 
 
@@ -75,5 +86,6 @@ const logout = async (req, res) => {
 module.exports = {
     newUser,
     loginUser,
-    logout
-}
+
+    logout,
+};

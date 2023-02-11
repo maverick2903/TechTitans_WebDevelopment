@@ -52,34 +52,49 @@ export default function ListingPage() {
             description: "Need to fix 2 tubelights",
             username: "karun",
         },
+        {
+            field: "Electrician",
+            description: "Need to fix 2 tubelights",
+            username: "varun",
+        },
+        {
+            field: "Electrician",
+            description: "Need to fix 2 tubelights",
+            username: "karun",
+        },
     ]);
 
-    // useEffect(() => {
-    //     (async () => {
-    //         // const resp = await fetch("http://localhost:5000/", {
-    //         //     method: "GET",
-    //         //     headers: {
-    //         //         "Content-Type": "application/json",
-    //         //     },
-    //         // });
-    //         // //
-    //         // const data = await resp.json();
-    //         // if (resp.status === 200) {
-    //         //     //Can replace with a toast or popup
-    //         //     console.log("login done");
-    //         //     // setAuth({ user: data.username, role: data.role });
-    //         //     // console.log(auth);
-    //         //     // navigate(from, { replace: true });
-    //         // } else {
-    //         //     window.alert("Invalid username/password"); //Can replace with a toast or popup
-    //         // }
-    //     })();
-    // }, []);
+    useEffect(() => {
+        (async () => {
+            const jsonwebtoken = localStorage.getItem("jsonwebtoken");
+
+            const resp = await fetch("http://localhost:5000/worker/clientJob", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    jsonwebtoken,
+                }),
+            });
+
+            const data = await resp.json();
+            console.log(data);
+            if (resp.status === 200) {
+                // setClientListing(data);
+                //Can replace with a toast or popup
+            } else {
+                //Can replace with a toast or popup
+            }
+        })();
+    }, []);
 
     return (
         <SimpleGrid
             marginTop="3rem"
-            spacing={4}
+            marginLeft="3rem"
+            marginRight="3rem"
+            spacing={8}
             templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
         >
             {clientListing.map((clientData) => (

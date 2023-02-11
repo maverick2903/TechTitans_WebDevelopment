@@ -1,16 +1,22 @@
 const jwt = require("jsonwebtoken");
-const user=require('../models/user.schema')
+const User = require("../models/user.schema");
 
 const authenticate = async (req, res, next) => {
     try {
-        const token = req.cookies.jsonwebtoken;
-        if (!token) {
+        const { jsonwebtoken } = req.body;
+        console.log(jsonwebtoken);
+        if (!jsonwebtoken) {
             throw new Error("Login first");
         }
         //verify returns our decrypted payload
-        const decryptedPayload = jwt.verify(token, process.env.SECRET_KEY);
+        const decryptedPayload = jwt.verify(
+            jsonwebtoken,
+            process.env.SECRET_KEY
+        );
         //A.B is how you access an array A of objects B
-        const userData = await User.findOne({ email: decryptedPayload.email });
+        const userData = await User.findOne({
+            username: decryptedPayload.username,
+        });
         if (!userData) {
             throw new Error("user not found");
         }
@@ -18,7 +24,10 @@ const authenticate = async (req, res, next) => {
         req.userData = userData;
         next();
     } catch (err) {
-        res.status(401).json({ error: "Authorization not given" });
+        res.status(401).json({
+            error: "Authorization not given",
+            message: err.message,
+        });
     }
 };
 
