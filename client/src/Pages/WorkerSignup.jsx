@@ -23,6 +23,7 @@ const WorkerSignUp = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
+  
   const password = location.state.password
   const username = location.state.username
 

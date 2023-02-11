@@ -32,7 +32,7 @@ export default function Navbar() {
                 alt="Website logo"
                 style={{ width: "3rem", marginLeft: "10px" }}
             />
-            <Heading marginLeft="5px" sx={titleLogosx}>
+            <Heading marginLeft="5px" sx={titleLogosx} >
                 GigGuru
             </Heading>
             <Spacer />

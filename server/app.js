@@ -7,10 +7,13 @@ const dotenv=require('dotenv').config()
 const user=require('./routes/user.routes')
 const client=require('./routes/client.routes')
 const worker=require('./routes/worker.routes')
+const admin=require("./routes/admin.routes")
+
 require('./dbConnect')
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan("dev"));
+
 
 const whitelist = [""];
 const corsOptions = {
@@ -26,7 +29,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/user", user);
 app.use("/client",client)
 app.use("/worker",worker)
-
+app.use("/admin",admin)
 
 
 app.use((req, res, next) => {
