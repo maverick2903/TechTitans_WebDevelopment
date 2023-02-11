@@ -55,13 +55,14 @@ const request=async(req,res)=>{
     }
 }
 
-const requestWorker=async(req,res)=>{
+const acceptOffer=async(req,res)=>{
     try {
         
     } catch (error) {
-        
+        res.status(400).json({message:error.message})
     }
 }
+
 module.exports={
     newClient,
     updateClient,
