@@ -42,12 +42,7 @@ const workerSchema=new mongoose.Schema(
             enum:['worker']
         },
         field:{
-            type:{
-                type:String
-            },
-            expertise:{
-                type:String
-            }
+            type:String
         },
         rating:{type:Number},
         verified:{type:Boolean},
@@ -63,6 +58,7 @@ workerSchema.pre("save", async function (next) {
     if (this.isModified("password")) {
         this.password = await bcrypt.hash(this.password, 9);
     }
+    next()
 })
 
 const Worker=mongoose.model('Worker',workerSchema)
