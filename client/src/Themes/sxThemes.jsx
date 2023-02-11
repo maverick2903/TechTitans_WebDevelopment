@@ -22,6 +22,11 @@ export const textsx = {
     "font-size": { sm: "20px", md: "28px", lg: "35px", xl: "40px" },
 };
 
+export const texttsx = {
+    "font-family": "QuickSand",
+    "font-size": { sm: "12px", md: "16px", lg: "20px", xl: "26px" },
+};
+
 export const textButtonsx = {
     "font-family": "QuickSand",
     "font-size": { sm: "20px", md: "22px", lg: "29px", xl: "40px" },

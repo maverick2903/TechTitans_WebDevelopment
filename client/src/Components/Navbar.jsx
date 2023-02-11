@@ -9,12 +9,12 @@ import {
 } from "@chakra-ui/react";
 import { SunIcon, MoonIcon } from "@chakra-ui/icons";
 import { NavLink } from "react-router-dom";
-import { Navlinksx, titleLogosx, iconsx } from "../Themes/sxThemes";
+import { Navlinksx, titleLogosx, iconsx, textsx } from "../Themes/sxThemes";
 import useAuth from "../Hooks/useAuth";
 import Logo from "../assets/logo.png";
 
 export default function Navbar() {
-    const { Auth } = useAuth();
+    const { auth } = useAuth();
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
@@ -38,25 +38,14 @@ export default function Navbar() {
             <Spacer />
 
             <HStack gap={5}>
-                {Auth?.user?.role === "client" && (
-                    <Link as={NavLink} to="/userpagerequest">
-                        Send Request
-                    </Link>
-                )}
-                {Auth?.user?.role === "worker" && (
-                    <Link as={NavLink} to="/userpagerequest">
-                        Client itneractions
-                    </Link>
-                )}
-
-                <Link as={NavLink} to="/aboutus" style={{ fontSize: "2rem" }}>
+                <Link as={NavLink} to="/aboutus" sx={textsx}>
                     About us
                 </Link>
-                {!Auth && (
+                {auth && (
                     <Link
                         as={NavLink}
                         to="/contactus"
-                        style={{ fontSize: "2rem" }}
+                        sx={textsx}
                     >
                         Contact us
                     </Link>

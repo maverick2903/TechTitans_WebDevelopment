@@ -12,6 +12,7 @@ const {
 } = require("../controllers/worker.controller");
 const authenticate = require("../middleware/auth");
 
+
 router.post("/newWorker", newWorker);
 router.patch("/updateWorker", authenticate, updateWorker);
 router.delete("/deleteWorker", authenticate, deleteWorker);
@@ -20,3 +21,4 @@ router.post("/clientJob", authenticate, clientJob);
 router.get("/particularClientJob", authenticate, particularClientJob);
 
 module.exports = router;
+

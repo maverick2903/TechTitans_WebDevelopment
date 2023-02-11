@@ -19,9 +19,9 @@ import {
     Link,
     Checkbox,
 } from "@chakra-ui/react";
-
+import { textsx, texttsx, textButtonsx } from "../Themes/sxThemes"
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import HomeImage from "../assets/abcd.svg";
 
@@ -78,11 +78,14 @@ export default function LoginPage() {
         }
     };
 
+ 
     return (
-        <Stack minH={"85vh"} direction={{ base: "column", md: "row" }}>
+        <Stack minH={"85vh"} direction={{ base: "column", md: "row" }} sx={textsx}>
             <Flex p={8} flex={1} align={"center"} justify={"center"}>
                 <Center marginLeft="2rem">
                     <Box
+                        border="2px solid"
+
                         maxW="sm"
                         borderWidth="1px"
                         rounded="lg"
@@ -90,109 +93,64 @@ export default function LoginPage() {
                         width="25rem"
                     >
                         <Center>
-                            <Box>Login Here</Box>
+
+
+                            <Box >Login Here</Box>
                         </Center>
                         <form onSubmit={handleSubmit} method="POST">
-                            <Stack spacing={4}>
-                                <FormControl>
-                                    <FormLabel htmlFor="username">
-                                        Username
-                                    </FormLabel>
-                                    <Input
-                                        id="username"
-                                        type="text"
-                                        value={username}
-                                        onChange={(e) =>
-                                            setUsername(e.target.value)
-                                        }
-                                    />
-                                </FormControl>
+                            <Stack spacing={4} >
 
-                                <FormControl>
-                                    <FormLabel htmlFor="password">
-                                        Password
-                                    </FormLabel>
-                                    <Input
-                                        id="password"
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
-                                    />
-                                </FormControl>
+                                <div className="parent">
+                                    <FormControl>
+                                        <FormLabel htmlFor="username">
+                                            Username
+                                        </FormLabel>
+                                        <Input
+                                            id="username"
+                                            type="text"
+                                            value={username}
+                                            onChange={(e) =>
+                                                setUsername(e.target.value)
+                                            }
+                                        />
+                                    </FormControl>
+                                </div>
 
-                                <Button type="submit">Login</Button>
+
+                                <div className="parent">
+                                    <FormControl>
+                                        <FormLabel htmlFor="password">
+                                            Password
+                                        </FormLabel>
+                                        <Input
+                                            id="password"
+                                            type="password"
+                                            value={password}
+                                            onChange={(e) =>
+                                                setPassword(e.target.value)
+                                            }
+                                        />
+                                    </FormControl>
+                                </div>
+
+                                <Box m="auto">
+                                <Button m="auto" sx={textButtonsx} justifySelf="center" height={{ sm: "25px", md: "34px", lg: "43px", xl: "52px" }} width={{ sm: "150px", md: "165px", lg: "180px", xl: "185px" }} type="submit">Go</Button>
+                                    <Link as={NavLink} margin={{sm:"20px",md:"51px",lg:"36px",xl:"20px"}} sx={texttsx} to='/signup'> sign up?
+                                    </Link>
+ 
+                                </Box>
+
                             </Stack>
                         </form>
                     </Box>
                 </Center>
             </Flex>
 
-            <Flex flex={2}>
-                <Image alt={"Home Image"} objectFit={"cover"} src={HomeImage} />
-            </Flex>
-        </Stack>
-    );
+
+      <Flex flex={2}>
+        <Image alt={"Home Image"} objectFit={"cover"} src={HomeImage} />
+      </Flex>
+    </Stack>
+  );
 }
 
-{
-    /* <div style={{ display: "flex" }}>
-    <Center marginLeft="2rem">
-        <Box maxW="sm" borderWidth="1px" rounded="lg" p="6" width="25rem">
-            <Center>
-                <Box>Login Here</Box>
-            </Center>
-            <form onSubmit={handleSubmit} method="POST">
-                <Stack spacing={4}>
-                    <FormControl>
-                        <FormLabel htmlFor="username">Username</FormLabel>
-                        <Input
-                            id="username"
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
-                    </FormControl>
-
-                    <FormControl>
-                        <FormLabel htmlFor="password">Password</FormLabel>
-                        <Input
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </FormControl>
-
-                    <FormLabel htmlFor="role">Role</FormLabel>
-                    <RadioGroup id="role" onChange={setRole} value={role}>
-                        <Stack direction="row">
-                            <Radio value="client">Client</Radio>
-                            <Radio value="worker">Worker</Radio>
-                        </Stack>
-                    </RadioGroup>
-
-                    <Button type="submit">Login</Button>
-                </Stack>
-            </form>
-        </Box>
-    </Center>
-     <Center h="85vh" margin="0 2rem">
-                <Divider
-                    orientation="vertical"
-                    size="xl"
-                    borderColor={
-                        colorMode === "dark" ? "yellow.100" : "black.300"
-                    }
-                />
-            </Center> 
-    <Box width="40rem" margin="0 auto" marginTop="2rem">
-        <Image
-            src={HomeImage}
-            alt="Landing page image"
-            style={{ backgroundSize: "cover", width: "100%" }}
-        />
-    </Box>
-</div>; */
-}

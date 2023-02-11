@@ -7,7 +7,7 @@ export default function Home() {
 
   return auth.role == "client" ? (
     <Navigate to="clientpage" />
-  ) : (
+  ) : auth.role=="worker"?(
     <Navigate to="workerpage" />
-  );
+  ):<Navigate to="/login" />
 }
