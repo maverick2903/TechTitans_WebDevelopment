@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const app = express();
 const Worker=require('../models/worker.schema')
 const Client=require('../models/client.schema')
+const Communication=require('../models/communication.schema')
 const nodemailer = require("nodemailer");
 app.use(express.json());
 const generateOtp = require("../utilities/utils")
@@ -57,7 +58,7 @@ const selfView=async(req,res)=>{
 const clientJob=async(req,res)=>{
     try {
         const client=await Client.find({})
-        res.status(200).json(client.reqToClient)
+        res.status(200).json(client.category,client.reqToClient,client.username)
     } catch (error) {
         res.status(400).json({message:error.message})
     }
@@ -74,7 +75,13 @@ const particularClientJob=async(req,res)=>{
 
 const requestClient=async(req,res)=>{
     try {
-        
+        const username=req.body
+        const user=await Client.find({username:username})
+        const communication=new Communication({
+            usernameWorker:username,
+            usernameClient:req.user.username 
+        })
+        await communication.save()
     } catch (error) {
         res.status(400).json({message:error.message})
     }
@@ -84,5 +91,8 @@ module.exports={
     newWorker,
     updateWorker,
     deleteWorker,
-    selfView
+    selfView,
+    clientJob,
+    particularClientJob,
+    requestClient
 }

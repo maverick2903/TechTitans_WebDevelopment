@@ -1,23 +1,23 @@
 import {
-    Box,
-    Center,
-    Divider,
-    Flex,
-    useColorMode,
-    FormControl,
-    FormLabel,
-    Input,
-    Button,
-    Stack,
-    Radio,
-    RadioGroup,
-    Image,
-    AspectRatio,
-    GridItem,
-    Grid,
-    Heading,
-    Link,
-    Checkbox,
+  Box,
+  Center,
+  Divider,
+  Flex,
+  useColorMode,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Stack,
+  Radio,
+  RadioGroup,
+  Image,
+  AspectRatio,
+  GridItem,
+  Grid,
+  Heading,
+  Link,
+  Checkbox,
 } from "@chakra-ui/react";
 import { textsx, texttsx, textButtonsx } from "../Themes/sxThemes"
 import React, { useState } from "react";
@@ -26,47 +26,57 @@ import useAuth from "../Hooks/useAuth";
 import HomeImage from "../assets/abcd.svg";
 
 export default function LoginPage() {
-    const { auth, setAuth } = useAuth();
-    const navigate = useNavigate();
-    const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+  const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-    /*
+  /*
   after logging in we set Auth to an objectuser{username:"",role:""}
   and then write this statement
   */
 
-    const validateData = () => { return true };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const validateData = () => {
+    return true;
+  };
 
-        if (validateData()) {
-            //api login
-            const resp = await fetch("http://localhost:5000/user/loginUser", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username,
-                    password,
-                }),
-            });
-            //
-            const data = await resp.json();
-            if (resp.status === 200) {
-                //Can replace with a toast or popup
-                console.log("login done");
-                setAuth({ user: data.username, role: data.role });
-                navigate(from, { replace: true });
-            } else {
-                window.alert("Invalid username/password"); //Can replace with a toast or popup
-            }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+
+    if (validateData()) {
+      //api login
+      const resp = await fetch("http://localhost:5000/user/loginUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+      //
+      const data = await resp.json();
+      if (resp.status === 200) {
+        //Can replace with a toast or popup
+        console.log("login done");
+        setAuth({ user: data.username, role: data.role });
+        console.log(data);
+        if (data.role === "client") {
+          navigate("/clientpage");
+        } else if (data.role === "worker") {
+          navigate("/workerpage");
         }
-    };
+        /*         navigate(from, { replace: true }); */
+      } else {
+        window.alert("Invalid username/password"); //Can replace with a toast or popup
+      }
+    }
+  };
 
     return (
         <Stack minH={"85vh"} direction={{ base: "column", md: "row" }} sx={textsx}>
@@ -132,10 +142,10 @@ export default function LoginPage() {
                 </Center>
             </Flex>
 
-            <Flex flex={2}>
-                <Image alt={"Home Image"} objectFit={"cover"} src={HomeImage} />
-            </Flex>
-        </Stack>
-    );
+      <Flex flex={2}>
+        <Image alt={"Home Image"} objectFit={"cover"} src={HomeImage} />
+      </Flex>
+    </Stack>
+  );
 }
 

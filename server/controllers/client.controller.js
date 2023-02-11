@@ -61,14 +61,7 @@ const request = async (req, res) => {
     }
 }
 
-const requestWorker = async (req, res) => {
-    try {
-
-    } catch (error) {
-
-    }
-}
-module.exports = {
+module.exports={
     newClient,
     updateClient,
     deleteClient,
