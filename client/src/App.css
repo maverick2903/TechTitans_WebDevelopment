@@ -20,3 +20,13 @@ contact-us{
     bottom: 0;
     width: 100%;
 }
+
+.parent:focus-within:focus-within label{
+    font-weight: bold;
+}
+
+.workersignup{
+    display: flex;
+    align-items:center;
+    height: 80vh;
+}
