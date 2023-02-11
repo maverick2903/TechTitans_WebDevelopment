@@ -12,15 +12,6 @@ const clientSchema=new mongoose.Schema(
             type: String,
             minlength: [8, "Password must contain minimum 8 characters"],
         },
-        email: {
-            type: String,
-            unique: [true, "This email address already exists!"],
-            validate(value) {
-                if (!validator.isEmail(value)) {
-                    throw new Error("Invalid Email-Id");
-                }
-            },
-        },
         mobile: {
             type: Number,
             unique: [true, "mobile no. exists"],
@@ -44,6 +35,9 @@ const clientSchema=new mongoose.Schema(
             type:String
         },
         reqToClient:{
+            type:String
+        },
+        name:{
             type:String
         },
         location: {

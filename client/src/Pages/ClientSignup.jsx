@@ -7,46 +7,101 @@ import {
   Button,
   Stack,
   Text,
+  Link,
 } from "@chakra-ui/react";
+import useAuth from "../Hooks/useAuth";
+import { textsx, textButtonsx } from "../Themes/sxThemes"
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ClientSignUp = () => {
+  const { auth, setAuth } = useAuth();
   const [name, setName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation()
 
-  const handleSubmit = (e) => {
+  const password = location.state.password
+  const username = location.state.username
+  const role = location.state.role
+
+  const validateData = () => { return true };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform sign up logic here, such as sending a request to a server to register the user.
+
+    if (validateData()) {
+      console.log(location.state)
+      const resp = await fetch("http://localhost:5000/client/newWorker", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password,
+          name, mobile: contactNumber,
+          username,
+          role,
+        }),
+      });
+      const data = await resp.json();
+      if (resp.status === 200) {
+        console.log("login done");
+        setAuth({ user: data.username, role: data.role });
+        console.log(auth);
+        if(data.role=="client"){
+          navigate("/clientpage");
+        }else{
+          navigate("/workerpage")
+        }
+    } else {
+        window.alert("Invalid credentials");
+      }
+    }
+
   };
 
   return (
-    <Box maxW="sm" borderWidth="1px" rounded="lg" p="6" m="auto" textAlign="center">
-      <Text> You are almost done!</Text>
-      <form onSubmit={handleSubmit}>
-        <Stack spacing={4}>
-          <FormControl>
-            <FormLabel htmlFor="name">Name</FormLabel>
-            <Input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </FormControl>
+    <div className="workersignup">
+      <Box maxW="md" width="50%" borderWidth="1px" border="2px solid" rounded="lg" p="6" m="auto" textAlign="center" >
+        <Text sx={textsx}> You are almost done!</Text>
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={4} sx={textsx}>
 
-          <FormControl>
-            <FormLabel htmlFor="contactNumber">Contact Number</FormLabel>
-            <Input
-              id="contactNumber"
-              type="text"
-              value={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
-            />
-          </FormControl>
+            <div className="parent">
+              <FormControl>
+                <FormLabel htmlFor="name">Name</FormLabel>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </FormControl>
+            </div>
 
-          <Button type="submit">Sign up</Button>
-        </Stack>
-      </form>
-    </Box>
+            <div className="parent">
+              <FormControl>
+                <FormLabel htmlFor="contactNumber">Contact Number</FormLabel>
+                <Input
+                  id="contactNumber"
+                  type="text"
+                  value={contactNumber}
+                  onChange={(e) => setContactNumber(e.target.value)}
+                />
+              </FormControl>
+            </div>
+
+            <Box justifyItems="center">
+              <Button sx={textButtonsx} justifySelf="center" height={{ sm: "23px", md: "34px", lg: "43px", xl: "52px" }} width={{ sm: "150px", md: "180px", lg: "200px", xl: "230px" }} type="submit">Enter</Button>
+            </Box>
+
+
+          </Stack>
+        </form>
+      </Box>
+    </div>
+
   );
 };
 

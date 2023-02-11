@@ -10,19 +10,20 @@ import {
   RadioGroup,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { textsx,textButtonsx } from "../Themes/sxThemes"
 import useAuth from "../Hooks/useAuth";
+import { textsx, textButtonsx } from "../Themes/sxThemes"
 
 function InitialSignup() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("client");
+  const [prevPageData, setPrevPageData] = useState("")
+  const [role, setRole] = useState("");
   const { Auth, setAuth } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await fetch("/user/newUser", {
+    const resp = await fetch("http://localhost:5000/user/newUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,57 +34,71 @@ function InitialSignup() {
         role,
       }),
     });
-    //
     const data = await resp.json();
-    if (resp.status === 401 || !data) {
-      window.alert("Invalid username/password"); //Can replace with a toast or popup
-    } else {
-      window.alert("Login Successful"); //Can replace with a toast or popup
+    const prevPageData = { username,password,role }
+    if (resp.status === 200) {
+      window.alert("Login Successful");
       setAuth({ user: data.username, role: data.role });
     }
+    else {
+      window.alert("Invalid username/password");
+
+    }
     if (role === "client") {
-      navigate("/clientsignup");
+      navigate("/clientsignup", { state: prevPageData });
     } else if (role === "worker") {
-      navigate("/workersignup");
+      navigate("/workersignup" , { state: prevPageData } );
     }
   };
 
   return (
-      <Box  maxW="sm" borderWidth="1px" rounded="lg" p="6" m="auto" alignSelf="center" >
+    <div className="workersignup">
+      <Box maxW="md" width="50%" borderWidth="1px" border="2px solid" rounded="lg" p="6" m="auto" textAlign="center" >
         <form onSubmit={handleSubmit}>
-          <Stack spacing={4} sx={textsx} method="post">
-            <FormControl>
-              <FormLabel htmlFor="username">Username</FormLabel>
-              <Input
-                id="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </FormControl>
+          <Stack sx={textsx} spacing={4} method="post" >
 
-            <FormControl>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </FormControl>
+            <div className="parent">
+              <FormControl>
+                <FormLabel htmlFor="username">Username</FormLabel>
+                <Input
+                  id="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </FormControl>
+            </div>
 
-            <FormLabel htmlFor="role">Role</FormLabel>
-            <RadioGroup id="role" onChange={setRole} value={role}>
-              <Stack direction="row">
-                <Radio value="client">Client</Radio>
-                <Radio value="worker">Worker</Radio>
-              </Stack>
-            </RadioGroup>
+            <div className="parent">
+              <FormControl>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </FormControl>
+            </div>
 
-            <Button type="submit">Sign up</Button>
+            <Box>
+              <FormLabel htmlFor="role">Role</FormLabel>
+              <RadioGroup id="role" onChange={setRole} value={role}>
+                <Stack direction="row">
+                  <Radio value="client">Client</Radio>
+                  <Radio value="worker">Worker</Radio>
+                </Stack>
+              </RadioGroup>
+            </Box>
+
+            <Box>
+              <Button m="auto" sx={textButtonsx} justifySelf="center" height={{ sm: "23px", md: "38px", lg: "43px", xl: "52px" }} width={{ sm: "150px", md: "180px", lg: "200px", xl: "230px" }} type="submit">Sign up</Button>
+            </Box>
+
           </Stack>
         </form>
       </Box>
+    </div>
   );
 }
 
