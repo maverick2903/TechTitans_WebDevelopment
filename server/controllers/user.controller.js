@@ -62,10 +62,8 @@ const loginUser = async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
-  } catch (error) {
-    res.status(400).json({ message: error.message });
   }
-};
+
 
 const logout = async (req, res) => {
   res.clearCookie("jsonwebtoken", { path: "/" });
