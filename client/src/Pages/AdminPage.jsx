@@ -16,23 +16,28 @@ export default function AdminPage() {
   const { colorMode, toggleColorMode } = useColorMode();
   const [workerData, setWorkerData] = useState([])
 
-  const getData = async () =>{
+  const getData = async () => {
+    const jsonwebtoken = localStorage.getItem("jsonwebtoken");
     const res = await fetch("http://localhost:5000/admin/workerToBeVerified", {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      credentials: "include"
+      credentials: "include", body: JSON.stringify({
+        jsonwebtoken,
+      }),
+
     })
     const data = await res.json()
-    //setWorkerData(data)
+    setWorkerData(data)
+    console.log(data)
   }
 
   useEffect(() => {
     getData()
   }, [])
 
-  const rejectWorker = async(worker) =>{
+  const rejectWorker = async (worker) => {
     const username = worker.username
 
     const res = await fetch("http://localhost:5000/admin/deleteWorkerAdmin", {
@@ -41,16 +46,16 @@ export default function AdminPage() {
         "Content-Type": "application/json"
       },
       credentials: "include",
-      body:username
+      body: username
     })
-    if(res.status==200){
+    if (res.status == 200) {
 
-    }else{
+    } else {
 
     }
   }
 
-  const acceptWorker = async(worker)=>{
+  const acceptWorker = async (worker) => {
     const username = worker.username
 
     const res = await fetch("http://localhost:5000/admin/verifyWorker", {
@@ -59,11 +64,11 @@ export default function AdminPage() {
         "Content-Type": "application/json"
       },
       credentials: "include",
-      body:username
+      body: username
     })
-    if(res.status==200){
+    if (res.status == 200) {
 
-    }else{
+    } else {
 
     }
   }
@@ -105,7 +110,7 @@ export default function AdminPage() {
                 {worker.name}
               </Heading>
               <Text className='username-vala' fontWeight={600} color={'gray.500'} size="sm" mb={4}>
-                {"@"+worker.username}
+                {"@" + worker.username}
               </Text>
 
               <Stack
@@ -133,7 +138,7 @@ export default function AdminPage() {
                   _hover={{
                     bg: 'green.900',
                   }}
-                  onClick={()=>{acceptWorker(worker)}}>
+                  onClick={() => { acceptWorker(worker) }}>
                   Verify
                 </Button>
 
@@ -149,8 +154,8 @@ export default function AdminPage() {
                   }}
                   _focus={{
                     bg: 'blue.500',
-                  }} 
-                  onClick={()=>{rejectWorker(worker)}}>
+                  }}
+                  onClick={() => { rejectWorker(worker) }}>
                   Reject
                 </Button>
 

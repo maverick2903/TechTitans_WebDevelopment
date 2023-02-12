@@ -94,6 +94,7 @@ const WorkerSignUp = () => {
       console.log("login done");
       setAuth({ user: data.username, role: data.role });
       navigate("/workerpage")
+
     } else {
       window.alert("Invalid credentials");
     }
