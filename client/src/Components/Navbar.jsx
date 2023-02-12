@@ -17,7 +17,9 @@ import { useState } from "react";
 export default function Navbar() {
     const { auth } = useAuth();
     const { colorMode, toggleColorMode } = useColorMode();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        localStorage.getItem("jsonwebtoken")
+    );
 
     return (
         <Flex
@@ -49,11 +51,14 @@ export default function Navbar() {
                     </Link>
                 )}
 
-                {isLoggedIn === "false" ? (
+                {isLoggedIn === "" ? (
                     <></>
                 ) : (
                     <Link
-                        onClick={() => localStorage.removeItem("jsonwebtoken")}
+                        onClick={() => {
+                            localStorage.removeItem("jsonwebtoken");
+                            setIsLoggedIn("");
+                        }}
                         as={NavLink}
                         to="/"
                         sx={textsx}
