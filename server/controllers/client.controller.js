@@ -75,7 +75,8 @@ const request = async (req, res) => {
 };
 const ongoingRequest = async (req, res) => {
     try {
-        res.status(200).json({ message: req.user.reqToClient });
+        const userData=await Client.findOne({username:req.user.username})
+        res.status(200).json({ message: userData});
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
