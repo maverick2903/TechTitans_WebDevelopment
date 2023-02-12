@@ -29,8 +29,8 @@ export default function AdminPage() {
 
     })
     const data = await res.json()
-    setWorkerData(data)
     console.log(data)
+    setWorkerData(data)
   }
 
   useEffect(() => {
@@ -91,7 +91,6 @@ export default function AdminPage() {
               boxShadow={'xl'}
               padding={4}
             >
-
               <Flex flex={1} bg="blue.200">
                 <Image
                   objectFit="cover"
@@ -108,8 +107,8 @@ export default function AdminPage() {
                 alignItems="center"
                 p={1}
                 pt={2}>
-                <Heading fontSize={'2xl'} fontFamily={'body'} mb="40px">
-                  {worker.name}
+                <Heading color={colorMode=="dark"?"white":"blue.400"} fontSize={'2xl'} fontFamily={'body'} mb="40px">
+                  {worker.name} 
                 </Heading>
                 <Text className='username-vala' fontWeight={600} color={'gray.500'} size="sm" mb={4}>
                   {"@" + worker.username}

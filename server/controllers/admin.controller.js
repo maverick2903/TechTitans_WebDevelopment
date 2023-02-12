@@ -26,7 +26,7 @@ const verifyWorker=async(req,res)=>{
     console.log("asdasd")
     try {
         const {username}=req.body
-        await Worker.findOneAndUpdate({username:username},{verified:true})
+        await Worker.findOneAndUpdate({username:username},{verified:1})
         await workerVerification.findOneAndDelete({username:username})
         res.status(200).json({message:'Worker Verified'})
     } catch (error) {

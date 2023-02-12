@@ -9,12 +9,14 @@ import {
     Radio,
     RadioGroup,
 } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
 import { useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { textsx, textButtonsx } from "../Themes/sxThemes";
 import { validateForm } from "../utils/validateForm";
 
 function InitialSignup() {
+    const toast = useToast()
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -24,8 +26,8 @@ function InitialSignup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (validateForm({ username, password, role }, setFeedback, "signup")) {
+
             const resp = await fetch("http://localhost:5000/user/newUser", {
                 method: "POST",
                 headers: {
@@ -42,10 +44,23 @@ function InitialSignup() {
             const prevPageData = { username, password, role };
             if (resp.status === 200) {
                 localStorage.setItem("jsonwebtoken", token);
-                window.alert("Login Successful");
+                toast({
+                    title: 'Account created!',
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true,
+                    position:"bottom-right"
+                  })
+
                 setAuth({ user: user.username, role: user.role });
             } else {
-                window.alert("Invalid username/password");
+                toast({
+                    title: 'There was an error! please try again',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position:"bottom-right"
+                  })
             }
             if (role === "client") {
                 navigate("/clientsignup", { state: prevPageData });

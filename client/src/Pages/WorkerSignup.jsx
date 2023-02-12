@@ -10,10 +10,12 @@ import {
   VStack,
   Select,
 } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
 import { textsx, textButtonsx, textttsx } from "../Themes/sxThemes"
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { AttachmentIcon } from "@chakra-ui/icons"
+
 
 const WorkerSignUp = () => {
   const imageUrls = [];
@@ -25,6 +27,7 @@ const WorkerSignUp = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const [errorForFile, setErrorForFile] = useState(" ");
+  const toast = useToast()
 
 
   const password = location.state.password
@@ -72,10 +75,7 @@ const WorkerSignUp = () => {
         const respInJSON = await respCloudinary.json()
         const url = respInJSON.secure_url
         imageUrls.push(url)
-      } else {
-        alert("There was an error in uploading the iamge please try again!")
-        return;
-      }
+      } 
     }
 
     
@@ -91,12 +91,24 @@ const WorkerSignUp = () => {
 
     const data = await resp.json()
     if (resp.status === 200) {
-      console.log("login done");
+      toast({
+        title: 'There was an error in uploading the image to cloud please try again!',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position:"bottom-right"
+      })
       setAuth({ user: data.username, role: data.role });
       navigate("/workerpage")
 
     } else {
-      window.alert("Invalid credentials");
+      toast({
+        title: 'There was an error in uploading the image to cloud!',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position:"bottom-right"
+      })
     }
   };
 

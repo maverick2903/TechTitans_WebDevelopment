@@ -19,6 +19,7 @@ import {
     Link,
     Checkbox,
 } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
 import { textsx, texttsx, textButtonsx } from "../Themes/sxThemes";
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -27,6 +28,7 @@ import HomeImage from "../assets/abcd.svg";
 import { validateForm } from "../utils/validateForm";
 
 export default function LoginPage() {
+    const toast = useToast()
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -38,8 +40,9 @@ export default function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
         if (validateForm({ username, password }, setFeedback, "login")) {
-            //api login
+            
             const resp = await fetch("http://localhost:5000/user/loginUser", {
                 method: "POST",
                 headers: {
@@ -53,22 +56,34 @@ export default function LoginPage() {
 
             const data = await resp.json();
             const { token, userData } = data;
-            if (resp.status === 200) {
-                //Can replace with a toast or popup
-                localStorage.setItem("jsonwebtoken", token);
-                console.log("login done");
-                setAuth({ user: userData.username, role: userData.role });
 
+            if (resp.status === 200) {
+                localStorage.setItem("jsonwebtoken", token);
+                setAuth({ user: userData.username, role: userData.role });
+                toast({
+                    title: 'Account created!',
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true,
+                    position: "bottom-right"
+                })
                 if (userData.role === "client") {
                     navigate("/clientpage");
                 } else if (userData.role === "worker") {
                     navigate("/workerpage");
                 }
-                /*         navigate(from, { replace: true }); */
             } else {
-                window.alert("Invalid username/password"); //Can replace with a toast or popup
+                toast({
+                    title: 'Account created!',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position: "bottom-right"
+                })
             }
         }
+
+
     };
 
     return (
