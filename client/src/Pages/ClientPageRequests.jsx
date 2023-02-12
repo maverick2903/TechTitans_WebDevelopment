@@ -1,5 +1,6 @@
 import {
   Button,
+  Box,
   Card,
   CardBody,
   CardFooter,
@@ -7,10 +8,12 @@ import {
   Heading,
   SimpleGrid,
   Text,
+  Stack,
   Input,
   FormLabel,
   FormControl,
 } from "@chakra-ui/react";
+import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Modal,
   ModalOverlay,
@@ -53,6 +56,16 @@ function ClientListingCard({ clientData }) {
           <ModalCloseButton />
           <ModalBody>
             {/* Here we need to add asection for all prices */}
+            <Box
+              borderWidth="1px"
+              border="2px solid"
+              rounded="lg"
+              p="6"
+              m="auto"
+              textAlign="center"
+            >
+              hi there
+            </Box>
             <form method="POST">
               <FormControl>
                 <FormLabel htmlFor="username">Quote a price</FormLabel>
@@ -68,6 +81,23 @@ function ClientListingCard({ clientData }) {
           </ModalBody>
 
           <ModalFooter>
+            <Stack spacing={4} m="auto">
+              <Button
+                leftIcon={<CheckIcon />}
+                colorScheme="green"
+                variant="solid"
+              >
+                Accept
+              </Button>
+              <Button
+                leftIcon={<CloseIcon />}
+                colorScheme="red"
+                variant="solid"
+              >
+                Reject
+              </Button>
+            </Stack>
+
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
@@ -103,28 +133,28 @@ export default function ClientPageRequests() {
     },
   ]);
 
-  // useEffect(() => {
-  //     (async () => {
-  //         // const resp = await fetch("http://localhost:5000/", {
-  //         //     method: "GET",
-  //         //     headers: {
-  //         //         "Content-Type": "application/json",
-  //         //     },
-  //         // });
-  //         // //
-  //         // const data = await resp.json();
-  //         // if (resp.status === 200) {
-  //         //     //Can replace with a toast or popup
-  //         //     console.log("login done");
-  //         //     // setAuth({ user: data.username, role: data.role });
-  //         //     // console.log(auth);
-  //         //     // navigate(from, { replace: true });
-  //         // } else {
-  //         //     window.alert("Invalid username/password"); //Can replace with a toast or popup
-  //         // }
-  //     })();
-  // }, []);
+  /* useEffect(() => {
+    async () => {
+      const resp = await fetch("http://localhost:5000/", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await resp.json();
+      if (resp.status === 200) {
+        //Can replace with a toast or popup
+        console.log("login done");
+      } else {
+        window.alert("Invalid username/password"); //Can replace with a toast or popup
+      }
+    };
+  });
 
+  useEffect(() => {
+    async () => {};
+  });
+ */
   return (
     <SimpleGrid
       marginTop="3rem"
