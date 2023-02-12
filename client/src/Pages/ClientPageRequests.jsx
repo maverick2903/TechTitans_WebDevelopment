@@ -1,3 +1,4 @@
+
 import {
   Button,
   Box,
@@ -110,6 +111,21 @@ function ClientListingCard({ clientData }) {
 }
 
 export default function ClientPageRequests() {
+
+  const getReq = async() => {
+
+    const resp = await fetch("http://localhost:5000/client/ongoingRequest", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await resp.json();
+  }
+
+
+
   const [clientListing, setClientListing] = useState([
     {
       field: "Electrician",
@@ -150,11 +166,12 @@ export default function ClientPageRequests() {
       }
     };
   });
+  */
 
   useEffect(() => {
-    async () => {};
+    getReq();
   });
- */
+
   return (
     <SimpleGrid
       marginTop="3rem"

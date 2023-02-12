@@ -61,7 +61,7 @@ export default function LoginPage() {
                 localStorage.setItem("jsonwebtoken", token);
                 setAuth({ user: userData.username, role: userData.role });
                 toast({
-                    title: 'Account created!',
+                    title: 'login successfully!',
                     status: 'success',
                     duration: 4000,
                     isClosable: true,
@@ -74,7 +74,7 @@ export default function LoginPage() {
                 }
             } else {
                 toast({
-                    title: 'Account created!',
+                    title: 'unsuccesful login! please try again',
                     status: 'error',
                     duration: 4000,
                     isClosable: true,
