@@ -92,12 +92,12 @@ const WorkerSignUp = () => {
     const data = await resp.json()
     if (resp.status === 200) {
       toast({
-        title: 'There was an error in uploading the image to cloud please try again!',
-        status: 'error',
+        title: 'Account created! Please wait for verification now',
+        status: 'success',
         duration: 4000,
         isClosable: true,
-        position:"bottom-right"
-      })
+        position: "bottom-right"
+    })
       setAuth({ user: data.username, role: data.role });
       navigate("/workerpage")
 
