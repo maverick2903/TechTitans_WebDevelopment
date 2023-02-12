@@ -12,10 +12,14 @@ import { NavLink } from "react-router-dom";
 import { Navlinksx, titleLogosx, iconsx, textsx } from "../Themes/sxThemes";
 import useAuth from "../Hooks/useAuth";
 import Logo from "../assets/logo.png";
+import { useState } from "react";
 
 export default function Navbar() {
     const { auth } = useAuth();
     const { colorMode, toggleColorMode } = useColorMode();
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        localStorage.getItem("jsonwebtoken")
+    );
 
     return (
         <Flex
@@ -32,7 +36,7 @@ export default function Navbar() {
                 alt="Website logo"
                 style={{ width: "3rem", marginLeft: "10px" }}
             />
-            <Heading marginLeft="5px" sx={titleLogosx} >
+            <Heading marginLeft="5px" sx={titleLogosx}>
                 GigGuru
             </Heading>
             <Spacer />
@@ -42,12 +46,24 @@ export default function Navbar() {
                     About us
                 </Link>
                 {auth && (
+                    <Link as={NavLink} to="/contactus" sx={textsx}>
+                        Contact us
+                    </Link>
+                )}
+
+                {isLoggedIn === "" ? (
+                    <></>
+                ) : (
                     <Link
+                        onClick={() => {
+                            localStorage.removeItem("jsonwebtoken");
+                            setIsLoggedIn("");
+                        }}
                         as={NavLink}
-                        to="/contactus"
+                        to="/"
                         sx={textsx}
                     >
-                        Contact us
+                        Logout
                     </Link>
                 )}
 

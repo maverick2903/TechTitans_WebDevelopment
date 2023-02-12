@@ -1,32 +1,37 @@
-nav a.active{
-    text-shadow:2px 3px 4px;
+nav a.active {
+    text-shadow: 2px 3px 4px;
     font-weight: bold;
 }
 
-.root-layout{
+.root-layout {
     height: 90vh;
 }
 
-.about-us{
+.about-us {
     height: 90vh;
 }
 
-contact-us{
+contact-us {
     height: 90vh;
 }
 
-.footer{
+#image {
+    display: none;
+}
+
+
+.footer {
     position: fixed;
     bottom: 0;
     width: 100%;
 }
 
-.parent:focus-within:focus-within label{
+.parent:focus-within:focus-within label {
     font-weight: bold;
 }
 
-.workersignup{
+.workersignup {
     display: flex;
-    align-items:center;
+    align-items: center;
     height: 80vh;
 }

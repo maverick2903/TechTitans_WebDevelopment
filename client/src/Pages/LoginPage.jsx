@@ -19,34 +19,30 @@ import {
     Link,
     Checkbox,
 } from "@chakra-ui/react";
-import { textsx, texttsx, textButtonsx } from "../Themes/sxThemes"
+import { useToast } from '@chakra-ui/react'
+import { textsx, texttsx, textButtonsx } from "../Themes/sxThemes";
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import HomeImage from "../assets/abcd.svg";
+import { validateForm } from "../utils/validateForm";
 
 export default function LoginPage() {
+    const toast = useToast()
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
-    /*
-  after logging in we set Auth to an objectuser{username:"",role:""}
-  and then write this statement
-  */
-
-    const validateData = () => {
-        return true;
-    };
+    const [feedback, setFeedback] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateData()) {
-            //api login
+
+        if (validateForm({ username, password }, setFeedback, "login")) {
+            
             const resp = await fetch("http://localhost:5000/user/loginUser", {
                 method: "POST",
                 headers: {
@@ -60,32 +56,46 @@ export default function LoginPage() {
 
             const data = await resp.json();
             const { token, userData } = data;
-            if (resp.status === 200) {
-                //Can replace with a toast or popup
-                localStorage.setItem("jsonwebtoken", token);
-                console.log("login done");
-                setAuth({ user: userData.username, role: userData.role });
 
+            if (resp.status === 200) {
+                localStorage.setItem("jsonwebtoken", token);
+                setAuth({ user: userData.username, role: userData.role });
+                toast({
+                    title: 'Account created!',
+                    status: 'success',
+                    duration: 4000,
+                    isClosable: true,
+                    position: "bottom-right"
+                })
                 if (userData.role === "client") {
                     navigate("/clientpage");
                 } else if (userData.role === "worker") {
                     navigate("/workerpage");
                 }
-                /*         navigate(from, { replace: true }); */
             } else {
-                window.alert("Invalid username/password"); //Can replace with a toast or popup
+                toast({
+                    title: 'Account created!',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position: "bottom-right"
+                })
             }
         }
+
+
     };
 
- 
     return (
-        <Stack minH={"85vh"} direction={{ base: "column", md: "row" }} sx={textsx}>
+        <Stack
+            minH={"85vh"}
+            direction={{ base: "column", md: "row" }}
+            sx={textsx}
+        >
             <Flex p={8} flex={1} align={"center"} justify={"center"}>
                 <Center marginLeft="2rem">
                     <Box
                         border="2px solid"
-
                         maxW="sm"
                         borderWidth="1px"
                         rounded="lg"
@@ -93,13 +103,10 @@ export default function LoginPage() {
                         width="25rem"
                     >
                         <Center>
-
-
-                            <Box >Login Here</Box>
+                            <Box>Login Here</Box>
                         </Center>
                         <form onSubmit={handleSubmit} method="POST">
-                            <Stack spacing={4} >
-
+                            <Stack spacing={4}>
                                 <div className="parent">
                                     <FormControl>
                                         <FormLabel htmlFor="username">
@@ -115,7 +122,6 @@ export default function LoginPage() {
                                         />
                                     </FormControl>
                                 </div>
-
 
                                 <div className="parent">
                                     <FormControl>
@@ -134,23 +140,52 @@ export default function LoginPage() {
                                 </div>
 
                                 <Box m="auto">
-                                <Button m="auto" sx={textButtonsx} justifySelf="center" height={{ sm: "25px", md: "34px", lg: "43px", xl: "52px" }} width={{ sm: "150px", md: "165px", lg: "180px", xl: "185px" }} type="submit">Go</Button>
-                                    <Link as={NavLink} margin={{sm:"20px",md:"51px",lg:"36px",xl:"20px"}} sx={texttsx} to='/signup'> sign up?
+                                    <Button
+                                        m="auto"
+                                        sx={textButtonsx}
+                                        justifySelf="center"
+                                        padding="1.2rem 10px"
+                                        style={{ fontSize: "1.2rem" }}
+                                        // height={{
+                                        //     sm: "25px",
+                                        //     md: "34px",
+                                        //     lg: "43px",
+                                        //     xl: "52px",
+                                        // }}
+                                        width={{
+                                            sm: "150px",
+                                            md: "145px",
+                                            lg: "160px",
+                                            xl: "185px",
+                                        }}
+                                        type="submit"
+                                    >
+                                        Login
+                                    </Button>
+                                    <Link
+                                        as={NavLink}
+                                        margin={{
+                                            sm: "20px",
+                                            md: "51px",
+                                            lg: "36px",
+                                            xl: "20px",
+                                        }}
+                                        sx={texttsx}
+                                        to="/signup"
+                                    >
+                                        {" "}
+                                        sign up?
                                     </Link>
- 
                                 </Box>
-
                             </Stack>
                         </form>
                     </Box>
                 </Center>
             </Flex>
 
-
-      <Flex flex={2}>
-        <Image alt={"Home Image"} objectFit={"cover"} src={HomeImage} />
-      </Flex>
-    </Stack>
-  );
+            <Flex flex={2}>
+                <Image alt={"Home Image"} objectFit={"cover"} src={HomeImage} />
+            </Flex>
+        </Stack>
+    );
 }
-
