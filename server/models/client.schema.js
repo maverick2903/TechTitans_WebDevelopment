@@ -37,6 +37,11 @@ const clientSchema=new mongoose.Schema(
         reqToClient:{
             type:String
         },
+        reqAccepted:{
+            type:Number,
+            enum:[0,1],
+            default:0
+        },
         name:{
             type:String
         },

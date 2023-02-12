@@ -73,14 +73,17 @@ const request = async (req, res) => {
         // res.status(400).json({ message: error.message });
     }
 };
+
 const ongoingRequest = async (req, res) => {
     try {
         const userData=await Client.findOne({username:req.user.username})
-        res.status(200).json({ message: userData});
+        console.log(userData)
+        res.send(userData)
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
+
 const clientQuotePrice = async (req, res) => {
     try {
         const { username, price } = req.body; //worker ka username chaiye

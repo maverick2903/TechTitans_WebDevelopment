@@ -97,6 +97,7 @@ const workerQuotePrice=async(req,res)=>{
         const {username,price}=req.body //client ka username chaiye
         await Communication.findOneAndUpdate({usernameClient:username},{priceByWorker:price})
         await Communication.findOneAndUpdate({usernameClient:username},{usernameWorker:req.user.username})
+        await Client.findOneAndUpdate({username:username,reqAccepted:1})
         res.status(200).json({message:price})
     } catch (error) {
         res.status(400).json({message:error.message})
