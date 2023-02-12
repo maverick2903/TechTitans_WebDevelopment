@@ -2,11 +2,15 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const app = express();
-const Client = require("../models/client.schema");
-const Worker = require("../models/worker.schema");
+
+const Client = require('../models/client.schema')
+const Worker = require('../models/worker.schema')
+const AdminLog=require('../models/adminLog.schema')
 const nodemailer = require("nodemailer");
 app.use(express.json());
 const generateOtp = require("../utilities/utils");
+const { Admin } = require("mongodb");
+
 const SecretKey = process.env.SECRET_KEY;
 
 const newClient = async (req, res) => {
@@ -100,9 +104,25 @@ const clientGetPrice = async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
-};
+
+}
+const accept=async(req,res)=>{
+    try{
+        const {username}=req.body //worker ka username needed
+        const adminLog=new AdminLog({
+            client_id:req.user.username,
+            worker_id:username
+        })
+        await adminLog.save()
+        
+    } catch(err){
+        res.status(400).json({message:err.message})
+    }
+}
+
 
 module.exports = {
+
     newClient,
     updateClient,
     deleteClient,
