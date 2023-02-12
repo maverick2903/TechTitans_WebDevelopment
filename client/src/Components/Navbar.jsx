@@ -17,7 +17,7 @@ import { useState } from "react";
 export default function Navbar() {
     const { auth } = useAuth();
     const { colorMode, toggleColorMode } = useColorMode();
-    const [isLoggedIn,setIsLoggedIn] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     return (
         <Flex
@@ -34,7 +34,7 @@ export default function Navbar() {
                 alt="Website logo"
                 style={{ width: "3rem", marginLeft: "10px" }}
             />
-            <Heading marginLeft="5px" sx={titleLogosx} >
+            <Heading marginLeft="5px" sx={titleLogosx}>
                 GigGuru
             </Heading>
             <Spacer />
@@ -44,18 +44,23 @@ export default function Navbar() {
                     About us
                 </Link>
                 {auth && (
-                    <Link
-                        as={NavLink}
-                        to="/contactus"
-                        sx={textsx}
-                    >
+                    <Link as={NavLink} to="/contactus" sx={textsx}>
                         Contact us
                     </Link>
                 )}
 
-                {isLoggedIn=="false"?(<></>):(<Link as={NavLink} to="/" sx={textsx}>
-                    Logout
-                </Link>)}
+                {isLoggedIn === "false" ? (
+                    <></>
+                ) : (
+                    <Link
+                        onClick={() => localStorage.removeItem("jsonwebtoken")}
+                        as={NavLink}
+                        to="/"
+                        sx={textsx}
+                    >
+                        Logout
+                    </Link>
+                )}
 
                 <IconButton
                     sx={iconsx}
