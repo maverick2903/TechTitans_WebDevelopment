@@ -12,10 +12,12 @@ import { NavLink } from "react-router-dom";
 import { Navlinksx, titleLogosx, iconsx, textsx } from "../Themes/sxThemes";
 import useAuth from "../Hooks/useAuth";
 import Logo from "../assets/logo.png";
+import { useState } from "react";
 
 export default function Navbar() {
     const { auth } = useAuth();
     const { colorMode, toggleColorMode } = useColorMode();
+    const [isLoggedIn,setIsLoggedIn] = useState(false)
 
     return (
         <Flex
@@ -50,6 +52,10 @@ export default function Navbar() {
                         Contact us
                     </Link>
                 )}
+
+                {isLoggedIn=="false"?(<></>):(<Link as={NavLink} to="/" sx={textsx}>
+                    Logout
+                </Link>)}
 
                 <IconButton
                     sx={iconsx}

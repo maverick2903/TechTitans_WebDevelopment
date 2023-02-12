@@ -23,8 +23,9 @@ const workerToBeVerified=async(req,res)=>{
 }
 
 const verifyWorker=async(req,res)=>{
+    console.log("asdasd")
     try {
-        const username=req.body
+        const {username}=req.body
         await Worker.findOneAndUpdate({username:username},{verified:true})
         await workerVerification.findOneAndDelete({username:username})
         res.status(200).json({message:'Worker Verified'})
@@ -35,7 +36,7 @@ const verifyWorker=async(req,res)=>{
 
 const deleteWorker=async(req,res)=>{
     try {
-        const username=req.body
+        const {username}=req.body
         await Worker.findOneAndDelete({username:username})
         await workerVerification.findOneAndDelete({username:username})
         res.status(200).json({message:'Worker deleted'})
