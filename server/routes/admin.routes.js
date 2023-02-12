@@ -9,7 +9,7 @@ const {
 
 const authenticate = require("../middleware/auth");
 
-router.get("/workerToBeVerified", workerToBeVerified);
+router.post("/workerToBeVerified", workerToBeVerified);
 router.post("/verifyWorker", verifyWorker);
 router.delete("/deleteWorkerAdmin", deleteWorker);
 

@@ -11,11 +11,13 @@ const generateOtp = require("../utilities/utils")
 const SecretKey = process.env.SECRET_KEY;
 
 const workerToBeVerified=async(req,res)=>{
+    console.log("asdada")
     try
     {
     const worker=await workerVerification.find({})
-    res.status(200).json({worker})
+    res.send(worker)
     }catch(err){
+        console.log(err)
         res.status(400).json({message:err.message})
     }
 }

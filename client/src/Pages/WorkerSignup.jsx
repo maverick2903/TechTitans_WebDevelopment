@@ -18,16 +18,16 @@ const WorkerSignUp = () => {
   const [name, setName] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [city, setCity] = useState("");
-  const [field, setField ] = useState()
+  const [field, setField] = useState()
   const location = useLocation()
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
 
-  
+
   const password = location.state.password
   const username = location.state.username
 
-  const handleChange = (e) =>{
+  const handleChange = (e) => {
     setField(e.target.value)
     console.log(field)
   }
@@ -51,12 +51,9 @@ const WorkerSignUp = () => {
       console.log("login done");
       setAuth({ user: data.username, role: data.role });
       console.log(auth);
-      if(data.role=="client"){
-        navigate("/clientpage");
-      }else{
-        navigate("/workerpage")
-      }
-  } else {
+      navigate("/workerpage")
+
+    } else {
       window.alert("Invalid credentials");
     }
 
