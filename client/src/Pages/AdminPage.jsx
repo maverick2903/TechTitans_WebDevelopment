@@ -11,10 +11,12 @@ import {
   Text,
   useColorModeValue, useColorMode, VStack, StackDivider
 } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react'
 
 export default function AdminPage() {
   const { colorMode, toggleColorMode } = useColorMode();
   const [workerData, setWorkerData] = useState([])
+  const toast = useToast()
 
   const getData = async () => {
     const jsonwebtoken = localStorage.getItem("jsonwebtoken");
@@ -46,13 +48,25 @@ export default function AdminPage() {
         "Content-Type": "application/json"
       },
       credentials: "include",
-      body: JSON.stringify({username})
+      body: JSON.stringify({ username })
     })
-    
+
     if (res.status == 200) {
-
+      toast({
+        title: 'Account created!',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: "bottom-right"
+      })
     } else {
-
+      toast({
+        title: 'there was an error',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: "bottom-right"
+      })
     }
   }
 
@@ -66,12 +80,24 @@ export default function AdminPage() {
         "Content-Type": "application/json"
       },
       credentials: "include",
-      body: username
+      body: JSON.stringify({ username })
     })
     if (res.status == 200) {
-      console.log("done")
+      toast({
+        title: 'Account created!',
+        status: 'success',
+        duration: 4000,
+        isClosable: true,
+        position: "bottom-right"
+      })
     } else {
-      console.log("fail")
+      toast({
+        title: 'there was an error',
+        status: 'error',
+        duration: 4000,
+        isClosable: true,
+        position: "bottom-right"
+      })
     }
   }
 
@@ -80,7 +106,7 @@ export default function AdminPage() {
     <>
       <Center py={6}>
         {workerData.map((worker) => (
-          <VStack spacing={4} divider={<StackDivider borderColor="grey.100" /> } align="stretch" >
+          <VStack spacing={4} divider={<StackDivider borderColor="grey.100" />} align="stretch" >
             <Stack
               borderWidth="1px"
               borderRadius="lg"
@@ -107,8 +133,8 @@ export default function AdminPage() {
                 alignItems="center"
                 p={1}
                 pt={2}>
-                <Heading color={colorMode=="dark"?"white":"blue.400"} fontSize={'2xl'} fontFamily={'body'} mb="40px">
-                  {worker.name} 
+                <Heading color={colorMode == "dark" ? "blue.400" : "white"} fontSize={'2xl'} fontFamily={'body'} mb="40px">
+                  {worker.name}
                 </Heading>
                 <Text className='username-vala' fontWeight={600} color={'gray.500'} size="sm" mb={4}>
                   {"@" + worker.username}
