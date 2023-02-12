@@ -16,7 +16,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  Textarea,
+  Textarea, useColorMode
 } from "@chakra-ui/react";
 import {
   MdPhone,
@@ -27,9 +27,12 @@ import {
 } from "react-icons/md";
 import { BsGithub, BsDiscord, BsPerson } from "react-icons/bs";
 
+
 export default function ContactUs() {
+  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
-    <Container bg="#9DC4FB" maxW="full" mt={0} centerContent overflow="hidden">
+    <Container bg={colorMode == "dark" ? "" : ""} maxW="full" mt={0} centerContent overflow="hidden">
       <Flex>
         <Box
           bg="#02054B"
@@ -127,7 +130,8 @@ export default function ContactUs() {
                             pointerEvents="none"
                             children={<BsPerson color="gray.800" />}
                           />
-                          <Input type="text" size="md" />
+                          <Input type="text" placeholder="Your name"
+                            size="md" />
                         </InputGroup>
                       </FormControl>
                       <FormControl id="name">
@@ -137,7 +141,8 @@ export default function ContactUs() {
                             pointerEvents="none"
                             children={<MdOutlineEmail color="gray.800" />}
                           />
-                          <Input type="text" size="md" />
+                          <Input placeholder="Mail"
+                            type="text" size="md" />
                         </InputGroup>
                       </FormControl>
                       <FormControl id="name">
@@ -147,15 +152,17 @@ export default function ContactUs() {
                           _hover={{
                             borderRadius: "gray.300",
                           }}
-                          placeholder="message"
+                          placeholder="Message"
                         />
                       </FormControl>
                       <FormControl id="name" float="right">
                         <Button
                           variant="solid"
                           bg="#0D74FF"
-                          color="white"
-                          _hover={{}}
+                          color="black"
+                          boxShadow={
+                            '0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)'
+                          }
                         >
                           Send Message
                         </Button>

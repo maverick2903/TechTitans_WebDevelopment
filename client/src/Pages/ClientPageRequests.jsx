@@ -110,6 +110,17 @@ function ClientListingCard({ clientData }) {
 }
 
 export default function ClientPageRequests() {
+  const getReq = async () => {
+    const resp = await fetch("http://localhost:5000/client/ongoingRequest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await resp.json();
+  };
+
   const [clientListing, setClientListing] = useState([
     {
       field: "Electrician",
@@ -117,18 +128,18 @@ export default function ClientPageRequests() {
       username: "mohit",
     },
     {
-      field: "Electrician",
-      description: "Need to fix 2 tubelights",
+      field: "Plumber",
+      description: "Sink in the bathroom needs to be fixed",
       username: "rohit",
     },
     {
-      field: "Electrician",
-      description: "Need to fix 2 tubelights",
+      field: "Packers and Movers",
+      description: "Need to move a sofa across town",
       username: "varun",
     },
     {
-      field: "Electrician",
-      description: "Need to fix 2 tubelights",
+      field: "Housework",
+      description: "Someone to sweep and do the dishes",
       username: "karun",
     },
   ]);
@@ -150,11 +161,12 @@ export default function ClientPageRequests() {
       }
     };
   });
+  */
 
   useEffect(() => {
-    async () => {};
+    getReq();
   });
- */
+
   return (
     <SimpleGrid
       marginTop="3rem"

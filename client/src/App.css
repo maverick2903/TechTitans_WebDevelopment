@@ -11,9 +11,13 @@ nav a.active {
     height: 90vh;
 }
 
-contact-us {
+.contact-us {
     height: 90vh;
 }
+.contactt-us {
+    height: 70vh;
+}
+
 
 #image {
     display: none;

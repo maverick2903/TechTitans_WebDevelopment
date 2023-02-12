@@ -15,8 +15,10 @@ import {
     useBreakpointValue,
 } from "@chakra-ui/react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useToast } from '@chakra-ui/react'
 
 export default function ClientPage() {
+    const toast = useToast()
     const navigate = useNavigate();
     const [request, setRequest] = useState("");
     const [field, setField] = useState("");
@@ -28,7 +30,6 @@ export default function ClientPage() {
         e.preventDefault();
 
         const jsonwebtoken = localStorage.getItem("jsonwebtoken");
-
         //api login
         const resp = await fetch("http://localhost:5000/client/request", {
             method: "POST",
@@ -43,10 +44,22 @@ export default function ClientPage() {
         });
         const data = await resp.json();
         console.log(data);
-        if (resp.status === 401 || !data) {
-            window.alert("Invalid details"); //Can replace with a toast or popup
-        } else {
-            window.alert("Successful"); //Can replace with a toast or popup
+        if(resp.status==200){
+            toast({
+                title: 'login successfully!',
+                status: 'success',
+                duration: 4000,
+                isClosable: true,
+                position: "bottom-right"
+            })
+        }else{
+            toast({
+                title: 'unsuccesful request! please try again',
+                status: 'error',
+                duration: 4000,
+                isClosable: true,
+                position: "bottom-right"
+            })
         }
     };
 
