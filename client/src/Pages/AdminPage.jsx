@@ -53,7 +53,7 @@ export default function AdminPage() {
 
     if (res.status == 200) {
       toast({
-        title: 'Account created!',
+        title: 'Account rejected!',
         status: 'success',
         duration: 4000,
         isClosable: true,
@@ -84,7 +84,7 @@ export default function AdminPage() {
     })
     if (res.status == 200) {
       toast({
-        title: 'Account created!',
+        title: 'Account verified!',
         status: 'success',
         duration: 4000,
         isClosable: true,

@@ -103,8 +103,8 @@ const WorkerSignUp = () => {
 
     } else {
       toast({
-        title: 'There was an error in uploading the image to cloud!',
-        status: 'success',
+        title: 'There was an error! please try again',
+        status: 'error',
         duration: 4000,
         isClosable: true,
         position:"bottom-right"
