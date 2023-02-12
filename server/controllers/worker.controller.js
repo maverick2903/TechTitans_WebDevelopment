@@ -22,6 +22,7 @@ const newWorker=async (req, res) => {
     const worker = new Worker(req.body);
     const workerVerify=new workerVerification({username:username,name:name,idProof:idProof})
     await worker.save()
+    res.status(200).json({message:"successfull"})
     }catch(err){
         console.log(err)
         res.status(400).json({message:err.message})
