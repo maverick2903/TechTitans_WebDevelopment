@@ -19,7 +19,7 @@ import {
     Link,
     Checkbox,
 } from "@chakra-ui/react";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from "@chakra-ui/react";
 import { textsx, texttsx, textButtonsx } from "../Themes/sxThemes";
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -28,21 +28,26 @@ import HomeImage from "../assets/abcd.svg";
 import { validateForm } from "../utils/validateForm";
 
 export default function LoginPage() {
-    const toast = useToast()
+    const toast = useToast();
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [feedback, setFeedback] = useState("");
+    const [feedback, setFeedback] = useState("Invalid input!");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-
-        if (validateForm({ username, password }, setFeedback, "login")) {
-            
+        if (!validateForm({ username, password }, setFeedback, "login")) {
+            toast({
+                title: feedback,
+                status: "error",
+                duration: 4000,
+                isClosable: true,
+                position: "bottom-right",
+            });
+        } else {
             const resp = await fetch("http://localhost:5000/user/loginUser", {
                 method: "POST",
                 headers: {
@@ -61,12 +66,12 @@ export default function LoginPage() {
                 localStorage.setItem("jsonwebtoken", token);
                 setAuth({ user: userData.username, role: userData.role });
                 toast({
-                    title: 'Account created!',
-                    status: 'success',
+                    title: "Logged in!",
+                    status: "success",
                     duration: 4000,
                     isClosable: true,
-                    position: "bottom-right"
-                })
+                    position: "bottom-right",
+                });
                 if (userData.role === "client") {
                     navigate("/clientpage");
                 } else if (userData.role === "worker") {
@@ -74,16 +79,14 @@ export default function LoginPage() {
                 }
             } else {
                 toast({
-                    title: 'Account created!',
-                    status: 'error',
+                    title: "Some error occurred",
+                    status: "error",
                     duration: 4000,
                     isClosable: true,
-                    position: "bottom-right"
-                })
+                    position: "bottom-right",
+                });
             }
         }
-
-
     };
 
     return (

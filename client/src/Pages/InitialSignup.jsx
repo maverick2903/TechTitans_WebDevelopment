@@ -9,25 +9,34 @@ import {
     Radio,
     RadioGroup,
 } from "@chakra-ui/react";
-import { useToast } from '@chakra-ui/react'
+import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import { textsx, textButtonsx } from "../Themes/sxThemes";
 import { validateForm } from "../utils/validateForm";
 
 function InitialSignup() {
-    const toast = useToast()
+    const toast = useToast();
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("");
     const { auth, setAuth } = useAuth();
-    const [feedback, setFeedback] = useState("");
+    const [feedback, setFeedback] = useState("Invalid input!");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm({ username, password, role }, setFeedback, "signup")) {
-
+        if (
+            !validateForm({ username, password, role }, setFeedback, "signup")
+        ) {
+            toast({
+                title: feedback,
+                status: "error",
+                duration: 4000,
+                isClosable: true,
+                position: "bottom-right",
+            });
+        } else {
             const resp = await fetch("http://localhost:5000/user/newUser", {
                 method: "POST",
                 headers: {
@@ -45,22 +54,21 @@ function InitialSignup() {
             if (resp.status === 200) {
                 localStorage.setItem("jsonwebtoken", token);
                 toast({
-                    title: 'Account created!',
-                    status: 'success',
+                    title: "Account created!",
+                    status: "success",
                     duration: 4000,
                     isClosable: true,
-                    position:"bottom-right"
-                  })
-
+                    position: "bottom-right",
+                });
                 setAuth({ user: user.username, role: user.role });
             } else {
                 toast({
-                    title: 'There was an error! please try again',
-                    status: 'error',
+                    title: "Some error occurred!",
+                    status: "error",
                     duration: 4000,
                     isClosable: true,
-                    position:"bottom-right"
-                  })
+                    position: "bottom-right",
+                });
             }
             if (role === "client") {
                 navigate("/clientsignup", { state: prevPageData });
