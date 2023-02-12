@@ -19,11 +19,12 @@ import {
     Link,
     Checkbox,
 } from "@chakra-ui/react";
-import { textsx, texttsx, textButtonsx } from "../Themes/sxThemes"
+import { textsx, texttsx, textButtonsx } from "../Themes/sxThemes";
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
 import HomeImage from "../assets/abcd.svg";
+import { validateForm } from "../utils/validateForm";
 
 export default function LoginPage() {
     const { auth, setAuth } = useAuth();
@@ -32,20 +33,12 @@ export default function LoginPage() {
     const from = location.state?.from?.pathname || "/";
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
-    /*
-  after logging in we set Auth to an objectuser{username:"",role:""}
-  and then write this statement
-  */
-
-    const validateData = () => {
-        return true;
-    };
+    const [feedback, setFeedback] = useState("");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateData()) {
+        if (validateForm({ username, password }, setFeedback, "login")) {
             //api login
             const resp = await fetch("http://localhost:5000/user/loginUser", {
                 method: "POST",
@@ -78,14 +71,16 @@ export default function LoginPage() {
         }
     };
 
- 
     return (
-        <Stack minH={"85vh"} direction={{ base: "column", md: "row" }} sx={textsx}>
+        <Stack
+            minH={"85vh"}
+            direction={{ base: "column", md: "row" }}
+            sx={textsx}
+        >
             <Flex p={8} flex={1} align={"center"} justify={"center"}>
                 <Center marginLeft="2rem">
                     <Box
                         border="2px solid"
-
                         maxW="sm"
                         borderWidth="1px"
                         rounded="lg"
@@ -93,13 +88,10 @@ export default function LoginPage() {
                         width="25rem"
                     >
                         <Center>
-
-
-                            <Box >Login Here</Box>
+                            <Box>Login Here</Box>
                         </Center>
                         <form onSubmit={handleSubmit} method="POST">
-                            <Stack spacing={4} >
-
+                            <Stack spacing={4}>
                                 <div className="parent">
                                     <FormControl>
                                         <FormLabel htmlFor="username">
@@ -115,7 +107,6 @@ export default function LoginPage() {
                                         />
                                     </FormControl>
                                 </div>
-
 
                                 <div className="parent">
                                     <FormControl>
@@ -134,23 +125,52 @@ export default function LoginPage() {
                                 </div>
 
                                 <Box m="auto">
-                                <Button m="auto" sx={textButtonsx} justifySelf="center" height={{ sm: "25px", md: "34px", lg: "43px", xl: "52px" }} width={{ sm: "150px", md: "165px", lg: "180px", xl: "185px" }} type="submit">Go</Button>
-                                    <Link as={NavLink} margin={{sm:"20px",md:"51px",lg:"36px",xl:"20px"}} sx={texttsx} to='/signup'> sign up?
+                                    <Button
+                                        m="auto"
+                                        sx={textButtonsx}
+                                        justifySelf="center"
+                                        padding="1.2rem 10px"
+                                        style={{ fontSize: "1.2rem" }}
+                                        // height={{
+                                        //     sm: "25px",
+                                        //     md: "34px",
+                                        //     lg: "43px",
+                                        //     xl: "52px",
+                                        // }}
+                                        width={{
+                                            sm: "150px",
+                                            md: "145px",
+                                            lg: "160px",
+                                            xl: "185px",
+                                        }}
+                                        type="submit"
+                                    >
+                                        Login
+                                    </Button>
+                                    <Link
+                                        as={NavLink}
+                                        margin={{
+                                            sm: "20px",
+                                            md: "51px",
+                                            lg: "36px",
+                                            xl: "20px",
+                                        }}
+                                        sx={texttsx}
+                                        to="/signup"
+                                    >
+                                        {" "}
+                                        sign up?
                                     </Link>
- 
                                 </Box>
-
                             </Stack>
                         </form>
                     </Box>
                 </Center>
             </Flex>
 
-
-      <Flex flex={2}>
-        <Image alt={"Home Image"} objectFit={"cover"} src={HomeImage} />
-      </Flex>
-    </Stack>
-  );
+            <Flex flex={2}>
+                <Image alt={"Home Image"} objectFit={"cover"} src={HomeImage} />
+            </Flex>
+        </Stack>
+    );
 }
-
