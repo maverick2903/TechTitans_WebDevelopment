@@ -117,28 +117,28 @@ export default function ListingPage() {
       username: "mohit",
     },
     {
-      field: "Electrician",
-      description: "Need to fix 2 tubelights",
+      field: "Plumber",
+      description: "Sink in the bathroom needs to be fixed",
       username: "rohit",
     },
     {
-      field: "Electrician",
-      description: "Need to fix 2 tubelights",
+      field: "Packers and Movers",
+      description: "Need to move a sofa across town",
       username: "varun",
     },
     {
-      field: "Electrician",
-      description: "Need to fix 2 tubelights",
+      field: "Housework",
+      description: "Someone to sweep and do the dishes",
       username: "karun",
     },
     {
       field: "Electrician",
-      description: "Need to fix 2 tubelights",
+      description: "Need to fix the ceiling fan",
       username: "varun",
     },
     {
       field: "Electrician",
-      description: "Need to fix 2 tubelights",
+      description: "The washing machine needs to be fixed",
       username: "karun",
     },
   ]);
