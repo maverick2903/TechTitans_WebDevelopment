@@ -1,7 +1,7 @@
 # GigGuru
 
 ### About
-GigGuru is a website for daily wage workers and clients, where clients can list the service along with the exact issue. The workers can see these listings and have a price negotiation with the client which both can agree to. It is a full-stack website.
+GigGuru is a website for daily wage workers and clients, where clients can list the service along with the exact issue. The workers can see these listings and have a price negotiation with the client which both can agree to. It is a full-stack website. There is completete dark and white mode theming implemented.
 
 ### Screenshots:
 
@@ -10,6 +10,8 @@ GigGuru is a website for daily wage workers and clients, where clients can list 
 ![image](https://user-images.githubusercontent.com/91209576/218294997-b1f75067-9694-481d-a8a5-fdd3bd953684.png)
 
 ![image](https://user-images.githubusercontent.com/91209576/218295015-68a46f71-bcf5-4f77-86da-cddf9615348b.png)
+
+![image](https://user-images.githubusercontent.com/112639928/218543934-d6e89c6e-594e-4e72-a9dc-33d21e5a3d2d.png)
 
 2. Signup page
 
